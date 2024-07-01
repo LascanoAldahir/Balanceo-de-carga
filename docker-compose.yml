@@ -1,30 +1,33 @@
 version: '3'
 services:
-  myssql_maestro:
-    image: mysql:5.7
-    container_name: maestro
-    environment:
-      MYSQL_ROOT_PASSWORD: root 
-      MYSQL_DATABASE: replica
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
     ports:
-      - "3008:3306"
-    command: --server-id=1 --log-bin=mysql --binlog-do-db=replica
+      - 8080:80
 
-  mysql_esclavo:
-    image: mysql:5.7
-    container_name: mysql_esclavo
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: replica
+  servidor1:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: servidor1
     ports:
-      - "3009:3306"
-    command: --server-id=2 --log-bin=mysql --binlog-do-db=replica
+      - 5001:5000
 
-  phpmyadmin:
-    image: phpmyadmin
-    container_name: phpmyadmin
+  servidor2:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: servidor2
     ports:
-      - "8081:80"
-    environment:
-      PMA_HOSTS: "myssql_maestro, mysql_esclavo"
-      PMA_ARBITRARY: 1
+      - 5002:5000
+
+  servidor3:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: servidor3
+    ports:
+      - 5003:5000
