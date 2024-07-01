@@ -6,6 +6,6 @@ COPY servidor3.py .
 
 RUN pip install flask
 
-CMD ["python", "servidor2.py"]
+CMD ["python", "servidor3.py"]
 
 EXPOSE 5000
